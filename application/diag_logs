@@ -1,0 +1,26 @@
+[Fri Aug  3 12:59:11 2018] : Testing USB.....
+[Fri Aug  3 12:59:11 2018] : USB 1 found.
+[Fri Aug  3 12:59:11 2018] : USB 2 found.
+[Fri Aug  3 12:59:11 2018] : USB 1 mounted on '/media/santoshm/UBUNTU'
+[Fri Aug  3 12:59:11 2018] : USB 2 is not mounted so mounting...
+[Fri Aug  3 12:59:11 2018] : Unable to mount USB 2 on '/media/sd1'
+[Fri Aug  3 15:01:27 2018] : Testing USB.....
+[Fri Aug  3 15:01:27 2018] : USB 1 found.
+[Fri Aug  3 15:01:27 2018] : USB 2 found.
+[Fri Aug  3 15:01:27 2018] : USB 1 mounted on '/media/santoshm/UBUNTU'
+[Fri Aug  3 15:01:27 2018] : USB 2 is not mounted so mounting...
+[Fri Aug  3 15:01:27 2018] : Unable to mount USB 2 on '/media/sd1'
+[Fri Aug  3 15:01:41 2018] : Testing USB.....
+[Fri Aug  3 15:01:41 2018] : USB 1 found.
+[Fri Aug  3 15:01:41 2018] : USB 2 found.
+[Fri Aug  3 15:01:41 2018] : USB 1 mounted on '/media/santoshm/UBUNTU'
+[Fri Aug  3 15:01:41 2018] : USB 2 is not mounted so mount it by using 'usb detect' option
+[Fri Aug  3 15:01:41 2018] : Performing Read operation on USB 1
+[Fri Aug  3 15:01:41 2018] : Read 'Test Ok!' from USB 1
+[Fri Aug  3 15:01:52 2018] : Testing USB.....
+[Fri Aug  3 15:01:52 2018] : USB 1 found.
+[Fri Aug  3 15:01:52 2018] : USB 2 found.
+[Fri Aug  3 15:01:52 2018] : USB 1 mounted on '/media/santoshm/UBUNTU'
+[Fri Aug  3 15:01:52 2018] : USB 2 is not mounted so mount it by using 'usb detect' option
+[Fri Aug  3 15:01:52 2018] : Performing Write operation on USB 1
+[Fri Aug  3 15:01:52 2018] : Test Ok! on USB 1
