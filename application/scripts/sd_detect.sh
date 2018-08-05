@@ -7,11 +7,11 @@
 #echo "$TIMESTAMP : "" " >> $LOGPATH 
 
 # CONSTANTS
-LOGPATH="/home/santoshm/work/application/diag/diag_logs"
-RET=-1
+LOGPATH="/home/vinay/work/application/diag/diag_logs"
+RET=1
 MMC0=0
 
-echo -e "Testing SD card.....\n"
+echo "Testing SD card....."
 TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
 echo "$TIMESTAMP : ""Testing SD card.....\n" >> $LOGPATH 
 
@@ -28,8 +28,9 @@ else
     echo "$TIMESTAMP : ""SD card not connected." >> $LOGPATH 
 fi
 
-
-if [ "$MMC0" == "1" ]
+echo "MMC0 : $MMC0"
+#if [ "$MMC0" == "1" ]
+if [ $MMC0 ]
 then
     MOUNTPOINT=$(grep "mmcblk0" /proc/mounts | awk '{print $2}')
     if [ $? -ne 0 ];
@@ -54,12 +55,12 @@ then
 	    else 
 		echo "Unable to mount SD card on '/media/mmcblk0'"
 		TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-		echo "$TIMESTAMP : """ >> $LOGPATH 
+		echo "$TIMESTAMP : "" Unable to mount SD card on '/media/mmcblk0" >> $LOGPATH 
 	    fi
 	else
 	    echo "SD card 1 mounted on '$MOUNTPOINT'"
 	    TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-	    echo "$TIMESTAMP : "" " >> $LOGPATH 
+	    echo "$TIMESTAMP : ""SD card 1 mounted on '$MOUNTPOINT'" >> $LOGPATH 
 	    RET=0
 	fi
     fi

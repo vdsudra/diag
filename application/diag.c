@@ -1,15 +1,25 @@
 //#include "common_func.c"
 #include "liberty_diag.h"
 int flag = 1;
-
+#define LOG 1
+/*
+if(LOG)
+DIAGLOG("");
+*/
 void signalHandlerDiag(int sig_num){
     if(sig_num == SIGINT){
-        printf("Ctr + c Recived..\n");
-        if(1 == perform_abort()){
-            printf("Exiting diag app..\n");
-            exit(0);
-        }
-        printf("Exiting Handler\n");
+	printf("Ctr + c Recived..\n");
+	if(LOG)
+	    DIAGLOG("Ctr + c Recived..");
+	if(1 == perform_abort()){
+	    printf("Exiting Diagnostic Application.....\n");
+	    if(LOG)
+		DIAGLOG("Exiting diag app..");
+	    exit(0);
+	}
+	printf("Exiting Handler\n");
+	if(LOG)
+	    DIAGLOG("Exiting HandlerExiting Handler");
     }     
 }
 
@@ -17,13 +27,12 @@ int main(int argc, char *argv[]){
     int testNo = 0;
     char ch = 0;
     int ret = -1;
-    struct app_data diag_data;
-    memset(&diag_data, 0x00, sizeof(struct app_data));
+    if(LOG)
+	DIAGLOG("Diagnostic Application Start.....");
 
     signal(SIGINT, signalHandlerDiag);
-    //ret = diag_init(&diag_data);
-    //system("clear");
     do{
+	system("clear");
 	testNo = displayMenu();
 	switch(testNo){
 	    case 1: {
@@ -34,6 +43,7 @@ int main(int argc, char *argv[]){
 			else{
 			    printf(" Test Fail.: %s %d\n",  __func__, __LINE__);
 			}
+			sleep(1);
 			break;
 		    } 
 	    case 2: {
@@ -44,6 +54,7 @@ int main(int argc, char *argv[]){
 			else{
 			    printf(" Test Fail.: %s %d\n",  __func__, __LINE__);
 			}
+			sleep(1);
 			break;
 		    }
 
@@ -55,6 +66,7 @@ int main(int argc, char *argv[]){
 			else{
 			    printf(" Test Fail.: %s %d\n",  __func__, __LINE__);
 			}
+			sleep(1);
 			break;
 		    }
 	    case 4: {
@@ -65,6 +77,7 @@ int main(int argc, char *argv[]){
 			else{
 			    printf(" Test Fail.: %s %d\n",  __func__, __LINE__);
 			}
+			sleep(1);
 			break;
 		    }
 	    case 5: {
@@ -75,6 +88,7 @@ int main(int argc, char *argv[]){
 			else{
 			    printf(" Test Fail.: %s %d\n",  __func__, __LINE__);
 			}
+			sleep(1);
 			break;
 		    }
 		    /*
@@ -88,14 +102,18 @@ int main(int argc, char *argv[]){
 		       }
 		       break;
 		       }
-		       */
+		     */
 	    case 0: { //Exit
 			flag = 0;
 			break;
 		    }
 	    default:{
 			printf("Invalid Choice\n");
+			sleep(1);
 		    }
 	}
     }while(flag);
+    if(LOG)
+	DIAGLOG("Exiting diag app..");
+	return 0;
 }

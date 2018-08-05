@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# File      : usb_read.sh
-# brief     : Script to read data from usb
+# File      : log_usb.sh
+# brief     : Script to copy log on usb
 
 #TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
 #echo "$TIMESTAMP : "" " >> $LOGPATH 
@@ -10,17 +10,28 @@
 RET=1
 LOGPATH="/home/vinay/work/application/diag/diag_logs"
 
+# check log is present or not
+
+if [ ! -f "$LOGPATH" ];
+then
+    echo "'$file' not available to copy"
+    TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
+    echo "$TIMESTAMP : ""'$file' not available to copy" >> $LOGPATH
+    RET=0
+    exit $RET
+fi
+
 # Checking SD card is connection
-echo "Testing USB.....\n"
+echo -e "Finding USB to copy log .....\n"
 TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-echo "$TIMESTAMP : ""Testing USB....." >> $LOGPATH 
+echo "$TIMESTAMP : ""Finding USB to copy log ....." >> $LOGPATH 
 
 USB_DEVICE=`lsblk -l | grep "sd.1"`
 if [ $? -ne 0 ];
 then
     echo "Fail to find device."
     TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-    echo "$TIMESTAMP : ""Fail to find device." >> $LOGPATH
+    echo "$TIMESTAMP : ""Fail to find device for copy." >> $LOGPATH
     exit $RET
 fi
 
@@ -85,60 +96,43 @@ then
     fi
 fi
 
-# check read access to USB
+
+# check mount to USB
 if [ "$MOUNTPOINT1" != "" ];
 then
-    echo "Performing Read operation on USB 1"
+    echo "Performing copy operation on USB 1"
     TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-    echo "$TIMESTAMP : ""Performing Read operation on USB 1" >> $LOGPATH 
-    file=$MOUNTPOINT1/"test.txt"
-    if [ ! -f "$file" ]
+    echo "$TIMESTAMP : ""Performing copy operation on USB 1" >> $LOGPATH 
+    $(cp "$LOGPATH $MOUNTPOINT1")
+    if [ $?  !=  0 ];
     then
-	echo "'$file' not found, create file by 'usb write' option"
+	echo "Failed to copy log on USB 1"
 	TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-	echo "$TIMESTAMP : ""'$file' not found, create file by 'usb write' option" >> $LOGPATH 
+	echo "$TIMESTAMP : ""Failed to copy log on USB 1" >> $LOGPATH 
     else
-	DATA=$(cat $file)
-	if [ -z "$DATA" ];
-	then
-	    echo "No data to read from USB 1" 
-	    TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-	    echo "$TIMESTAMP : ""No data to read from USB 1" >> $LOGPATH 
-	    RET=0
-	else
-	    echo "Read '$DATA' from USB 1"
-	    TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-	    echo "$TIMESTAMP : ""Read '$DATA' from USB 1" >> $LOGPATH 
-	    RET=0
-	fi
+	echo "Log copied on USB 1"
+	TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
+	echo "$TIMESTAMP : ""Log copied on USB 1" >> $LOGPATH 
+	RET=0
     fi
 fi
 
 if [ "$MOUNTPOINT2" != "" ];
 then
-    echo "Performing Read operation on USB 2"
+    echo "Performing copy operation on USB 2"
     TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-    echo "$TIMESTAMP : ""Performing Read operation on USB 2" >> $LOGPATH 
-    file=$MOUNTPOINT2/"test.txt"
-    if [ ! -f "$file" ]
+    echo "$TIMESTAMP : ""Performing copy operation on USB 2" >> $LOGPATH 
+    $(cp "$LOGPATH $MOUNTPOINT2")
+    if [ $?  !=  0 ];
     then
-	echo "'$file' not found, create file by 'usb write' option"
+	echo "Failed to copy log on USB 2"
 	TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-	echo "$TIMESTAMP : ""'$file' not found, create file by 'usb write' option" >> $LOGPATH 
+	echo "$TIMESTAMP : ""Failed to copy log on USB 2" >> $LOGPATH 
     else
-	DATA=$(cat $file)
-	if [ -z "$DATA" ];
-	then
-	    echo "No data to read from USB 2" 
-	    TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-	    echo "$TIMESTAMP : ""No data to read from USB 2" >> $LOGPATH 
-	    RET=0
-	else
-	    echo "Read '$DATA' from USB 2"
-	    TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-	    echo "$TIMESTAMP : ""Read '$DATA' from USB 2" >> $LOGPATH 
-	    RET=0
-	fi
+	echo "Log copied on USB 2"
+	TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
+	echo "$TIMESTAMP : ""Log copied on USB 2" >> $LOGPATH 
+	RET=0
     fi
 fi
 

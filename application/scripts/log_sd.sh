@@ -1,19 +1,30 @@
 #!/bin/bash
 
-# File      : sdcard_write.sh
-# brief     : Script to write data on SD card
+# File      : log_sd.sh
+# brief     : Script to copy log on sd card
 
 #TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
 #echo "$TIMESTAMP : "" " >> $LOGPATH 
 
 # CONSTANTS
-LOGPATH="/home/vinay/work/application/diag/diag_logs"
 RET=1
+LOGPATH="/home/vinay/work/application/diag/diag_logs"
+
+# check log is present or not
+
+if [ ! -f "$LOGPATH" ];
+then
+    echo "'$file' not available to copy"
+    TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
+    echo "$TIMESTAMP : ""'$file' not available to copy" >> $LOGPATH
+    RET=0
+    exit $RET
+fi
 
 # Checking SD card is connection
-echo "Checking SD card....."
+echo -e "Finding SD card to copy log.....\n"
 TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-echo "$TIMESTAMP : ""Checking SD card.....\n" >> $LOGPATH 
+echo "$TIMESTAMP : ""Finding SD card to copy log.....\n" >> $LOGPATH 
 
 MOUNTPOINT=$(grep "mmcblk0" /proc/mounts | awk '{print $2}')
 if [ $? -ne 0 ];
@@ -36,19 +47,19 @@ fi
 
 if [ "$MOUNTPOINT" != "" ];
 then
-    echo "Performing Write operation on SD card 1"
+    echo "Performing copy operation on SD card"
     TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-    echo "$TIMESTAMP : ""Performing Write operation on SD card 1" >> $LOGPATH 
-    echo "Test Ok!" > "$MOUNTPOINT"/"test.txt"
+    echo "$TIMESTAMP : ""Performing copy operation on SD card" >> $LOGPATH 
+    $(cp "$LOGPATH $MOUNTPOINT")
     if [ $?  !=  0 ];
     then
-	echo "Write fails on test.txt"
+	echo "Failed to copy log on SD card"
 	TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-	echo "$TIMESTAMP : ""Write fails on test.txt" >> $LOGPATH 
+	echo "$TIMESTAMP : ""Failed to copy log on SD card" >> $LOGPATH 
     else
-	echo "Test Ok! on SD card"
+	echo "Log copied on SD card"
 	TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
-	echo "$TIMESTAMP : ""Test Ok! on SD card" >> $LOGPATH 
+	echo "$TIMESTAMP : ""Log copied on SD card" >> $LOGPATH 
 	RET=0
     fi
 fi

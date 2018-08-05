@@ -7,11 +7,11 @@
 #echo "$TIMESTAMP : "" " >> $LOGPATH 
 
 # CONSTANTS
-RET=-1
-LOGPATH="/home/santoshm/work/application/diag/diag_logs"
+RET=1
+LOGPATH="/home/vinay/work/application/diag/diag_logs"
 
 # Checking SD card is connection
-echo -e "Testing USB.....\n"
+echo "Testing USB.....\n"
 TIMESTAMP=`date +"[%a %b %_e %H:%M:%S %Y]"`
 echo "$TIMESTAMP : ""Testing USB....." >> $LOGPATH 
 
