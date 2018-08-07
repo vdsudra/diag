@@ -1,0 +1,4 @@
+config BR2_PACKAGE_DIAG
+	bool "diag"
+	help
+	  Diag App

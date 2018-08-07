@@ -1,10 +1,8 @@
-CC=gcc
-CFLAGS=
-#CFLAGS=-Wall
+all: diag
 
 diag: diag.c common_func.c
-	$(CC) $(CFLAGS) -o diag_app common_func.c  diag.c 
-#######	$(CC)  $(CFLAGS) -o diag_app common_func.c  diag.c  i2c_temp.c rtc_dev.c
+	$(CC) $(CFLAGS) $< -o $@
 
-clean:
-	rm -f a.out diag_app
+clean: 
+	rm -rf diag
+	rm -rf *.o

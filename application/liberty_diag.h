@@ -13,6 +13,7 @@
 #include <signal.h>
 #include <stdio_ext.h>
 #include <time.h>
+#include <wait.h>
 
 #define BUFF_512 512
 #define BUFF_128 128
